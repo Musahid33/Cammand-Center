@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IBMD Command Center</title>
+  <!-- Optional: provides the Tabler icons used below -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    :root {
+      --surface: #ffffff;
+      --surface-subtle: #f8fafc;
+      --text: #172033;
+      --text-secondary: #5d6b7d;
+      --border: #dce3ec;
+      --border-strong: #b8c4d2;
+      --focus: #1769aa;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      padding: 24px;
+      color: var(--text);
+      background: #f3f6f9;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .command-center {
+      width: min(100%, 960px);
+      margin: 0 auto;
+      padding: clamp(20px, 4vw, 36px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgb(23 32 51 / 8%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    /* Official Tata Steel mark: retain its original colours and proportions. */
+    .brand-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 210px;
+      min-height: 78px;
+      flex: 0 0 auto;
+      padding: 6px 18px 6px 0;
+      border-right: 1px solid var(--border);
+    }
+    .brand-logo {
+      display: block;
+      width: 166px;
+      height: auto;
+    }
+    .page-credit {
+      margin: 28px 0 0;
+      padding-top: 14px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+      font-size: .7rem;
+      line-height: 1.45;
+      text-align: center;
+    }
+    .page-credit strong { color: var(--text); font-weight: 650; }
+    .brand-info { display: flex; flex-direction: column; justify-content: center; min-height: 78px; }
+    .brand-name, .brand-description, .page-title, .page-description, .portal-title, .portal-description { margin: 0; }
+    .brand-name { font-size: 1rem; font-weight: 650; }
+    .brand-description { margin-top: 2px; color: var(--text-secondary); font-size: .8125rem; }
+    .brand-location { margin: 5px 0 0; color: var(--text-secondary); font-size: .75rem; }
+
+
+    .intro { margin-bottom: 24px; text-align: center; }
+    .page-title { font-size: 1.125rem; font-weight: 700; }
+    .page-description { margin-top: 5px; color: var(--text-secondary); font-size: .875rem; }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .portal-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+      padding: 24px 18px 18px;
+      text-align: center;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+    .portal-card:hover { border-color: var(--border-strong); box-shadow: 0 8px 18px rgb(23 32 51 / 8%); transform: translateY(-2px); }
+    .portal-icon {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      margin-bottom: 13px;
+      border-radius: 50%;
+    }
+    .portal-icon i { font-size: 23px; }
+    .portal-icon--teal { color: #087c77; background: #dff7f4; }
+    .portal-icon--blue { color: #2169c3; background: #e6f0ff; }
+    .portal-icon--coral { color: #bf513e; background: #ffebe7; }
+    .portal-title { font-size: .9375rem; font-weight: 700; line-height: 1.35; }
+    .portal-description { margin-top: 7px; color: var(--text-secondary); font-size: .8125rem; line-height: 1.45; }
+    .portal-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      min-height: 38px;
+      margin-top: 18px;
+      padding: 8px 12px;
+      color: #fff;
+      font: inherit;
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 650;
+      cursor: pointer;
+      background: #1769aa;
+      border: 1px solid #1769aa;
+      border-radius: 8px;
+    }
+    .portal-button:hover { background: #12598f; border-color: #12598f; }
+    .portal-button:focus-visible { outline: 3px solid color-mix(in srgb, var(--focus), transparent 65%); outline-offset: 3px; }
+    .portal-button i { font-size: 16px; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @media (max-width: 720px) { .portal-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) {
+      body { padding: 12px; }
+      .command-center { padding: 20px; }
+      .brand { align-items: flex-start; }
+      .brand-logo-wrap { width: 140px; min-height: 70px; padding-right: 10px; }
+      .brand-logo { width: 122px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .portal-card { transition: none; } .portal-card:hover { transform: none; } }
+  </style>
+</head>
+<body>
+  <main class="command-center" aria-labelledby="page-title">
+    <header class="brand">
+      <div class="brand-logo-wrap">
+        <img
+          class="brand-logo"
+          src="assets/tata-steel-logo.svg"
+          alt="Tata Steel Limited"
+          width="1000"
+          height="131"
+        />
+      </div>
+      <div class="brand-info">
+        <p class="brand-name">IBMD — West Bokaro Division</p>
+        <p class="brand-description">Industrial by-product management division</p>
+      </div>
+    </header>
+
+    <section class="intro" aria-describedby="page-description">
+      <h1 id="page-title" class="page-title">Command center</h1>
+      <p id="page-description" class="page-description">Choose a portal to continue</p>
+    </section>
+
+    <nav class="portal-grid" aria-label="Command center portals">
+      <article class="portal-card">
+        <div class="portal-icon portal-icon--teal" aria-hidden="true"><i class="ti ti-clipboard-list"></i></div>
+        <h2 class="portal-title">Safety observation / violation portal</h2>
+        <p class="portal-description">Log observations and report violations.</p>
+        <a class="portal-button" href="https://script.google.com/macros/s/AKfycbzbLNrEYZbzTBNZ3veo7lgYQJXfeTq9h1L_qZl4HNmDIecs5N6IzvaSQnJMqF2YGgx4Yw/exec" target="_blank" rel="noopener noreferrer">Open portal <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <article class="portal-card">
+        <div class="portal-icon portal-icon--blue" aria-hidden="true"><i class="ti ti-video"></i></div>
+        <h2 class="portal-title">Camera status</h2>
+        <p class="portal-description">Update camera status — whether it is down or operational.</p>
+        <a class="portal-button" href="https://docs.google.com/spreadsheets/d/1m7uWD4jbYvaq4aUu3bujxHWvIBhokEXz/edit?gid=892172593#gid=892172593" target="_blank" rel="noopener noreferrer">Open portal <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <article class="portal-card">
+        <div class="portal-icon portal-icon--coral" aria-hidden="true"><i class="ti ti-chart-bar"></i></div>
+        <h2 class="portal-title">Violation dashboard</h2>
+        <p class="portal-description">Trends, status, and area-wise breakdown.</p>
+        <a class="portal-button" href="https://script.google.com/macros/s/AKfycbwyy5S4w3DtCeNrxNf4B48b8zm2edFTTjqPxUTY2ZwziioczAK44ahx5sAJwb5iQXAs/exec" target="_blank" rel="noopener noreferrer">Open portal <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+      </article>
+    </nav>
+
+    <footer class="page-credit">
+      <strong>Designed, developed &amp; monitored by M/s Emveess Infraventures Pvt. Ltd.</strong><br />
+      Supply Chain Management
+    </footer>
+  </main>
+
+</body>
+</html>
